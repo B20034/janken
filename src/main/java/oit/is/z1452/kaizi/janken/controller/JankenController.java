@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 
 import oit.is.z1452.kaizi.janken.model.Entry;
+import oit.is.z1452.kaizi.janken.model.Janken;
 
 @Controller
 @RequestMapping("/janken")
@@ -39,22 +40,19 @@ public class JankenController {
   public String sample22(@PathVariable String param1, ModelMap model) {
 
     ArrayList<String> userName = new ArrayList<>();
+    Janken janken = new Janken();
     userName = this.entry.getUsers();
 
-    String myHand = "あなたの手 " + param1;
-    String opponentHand = "相手の手 Gu";
-    String result = "";
-    if (param1.equals("Gu")) {
-      result = "Draw";
-    } else if (param1.equals("Choki")) {
-      result = "You Lose";
-    } else if (param1.equals("Pa")) {
-      result = "You Win!";
-    }
+    janken.setMyStatus(param1);
+    janken.CPUOpponentHand();
+    // String myHand = "あなたの手 " + param1;
+    // String opponentHand = "相手の手 Gu";
+    // String result = "";
+
     model.addAttribute("name", userName);
-    model.addAttribute("myHand", myHand);
-    model.addAttribute("opponentHand", opponentHand);
-    model.addAttribute("result", result);
+    model.addAttribute("myHand", "あなたの手" + janken.getMystatus());
+    model.addAttribute("opponentHand", "あいての手" + janken.getOppstatus());
+    model.addAttribute("result", janken.JankenResult());
     return "janken.html";
 
   }

@@ -56,6 +56,8 @@ public class JankenAuthConfiguration {
     http.authorizeHttpRequests()
         .mvcMatchers("/janken/**").authenticated();
     http.headers().frameOptions().disable();
+    http.csrf().disable();
+    http.headers().frameOptions().disable();
     return http.build();
   }
 
